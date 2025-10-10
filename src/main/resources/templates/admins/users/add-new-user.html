@@ -1,33 +1,24 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/admin}">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>User Table</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
-    <!doctype html>
-    <html lang="vi" xmlns:th="http://www.thymeleaf.org">
-
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Table User</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    </head>
-
-    <body>
+    <div layout:fragment="main">
         <div class="container mt-4">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h3>Table user</h3>
+                <h3>User Table</h3>
                 <a class="btn btn-primary" th:href="@{/admin/user/create}">Add new</a>
             </div>
 
             <table class="table table-bordered table-striped align-middle text-center table-hover">
-                <thead class="">
+                <thead>
                     <tr>
                         <th>ID</th>
                         <th>Fullname</th>
@@ -36,18 +27,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Duyệt danh sách users -->
                     <tr th:each="u : ${users}">
                         <td th:text="${u.id}"></td>
                         <td th:text="${u.fullName}"></td>
                         <td th:text="${u.email}"></td>
                         <td>
                             <a th:href="@{/admin/user/{id}(id=${u.id})}"
-                                class="btn btn-sm btn-outline-primary me-1">view</a>
-                            <a class="btn btn-sm btn-outline-danger me-1"
-                                th:href="@{/admin/user/delete/{id}(id=${u.id})}">delete</a>
+                                class="btn btn-sm btn-outline-primary me-1">View</a>
                             <a th:href="@{/admin/user/delete/{id}(id=${u.id})}"
-                                class="btn btn-sm btn-outline-success">update</a>
+                                class="btn btn-sm btn-outline-danger me-1">Delete</a>
+                            <a th:href="@{/admin/user/update/{id}(id=${u.id})}"
+                                class="btn btn-sm btn-outline-success">Update</a>
                         </td>
                     </tr>
                     <tr th:if="${#lists.isEmpty(users)}">
@@ -56,11 +46,9 @@
                 </tbody>
             </table>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    </body>
-
-    </html>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

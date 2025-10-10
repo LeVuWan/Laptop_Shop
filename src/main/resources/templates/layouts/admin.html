@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:replace="fragments/head :: head"></head>
+
+<body class="sb-nav-fixed">
+    <nav th:replace="fragments/navbar :: navbar"></nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <div th:replace="fragments/sidebar :: sidebar"></div>
+        </div>
+        <div id="layoutSidenav_content">
+            <main layout:fragment="main"></main>
+            <div th:replace="fragments/footer :: footer"></div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+    <script th:src="@{/assets/js/scripts.js}"></script>
+</body>

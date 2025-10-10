@@ -1,35 +1,53 @@
 package com.windy.domains;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String email;
-    private String password;
-    private String phoneNumber;
+
     private String fullName;
+
+    private String password;
+
     private String address;
 
-    // Constructors
+    private String phone;
+
+    private String avatar;
+
+    // Relation to Role
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id")
+    private Role role;
+
+    public User(Long id, String email, String fullName, String password, String address, String phone, String avatar,
+            Role role) {
+        this.id = id;
+        this.email = email;
+        this.fullName = fullName;
+        this.password = password;
+        this.address = address;
+        this.phone = phone;
+        this.avatar = avatar;
+        this.role = role;
+    }
+
     public User() {
     }
 
-    public User(Long id, String email, String password, String phoneNumber, String fullName, String address) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-        this.phoneNumber = phoneNumber;
-        this.fullName = fullName;
-        this.address = address;
-    }
-
-    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -46,28 +64,20 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
     public String getFullName() {
         return fullName;
     }
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getAddress() {
@@ -78,15 +88,28 @@ public class User {
         this.address = address;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", fullName='" + fullName + '\'' +
-                ", address='" + address + '\'' +
-                '}';
+    public String getPhone() {
+        return phone;
     }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
 }

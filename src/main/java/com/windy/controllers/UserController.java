@@ -1,8 +1,6 @@
 package com.windy.controllers;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.windy.domains.User;
 import com.windy.services.UserService;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/admin/user")
@@ -26,7 +23,7 @@ public class UserController {
 
     @GetMapping("create")
     public String getCreateUserForm() {
-        return "add-new-user";
+        return "/admins/users/add-new-user";
     }
 
     @PostMapping("/create")
@@ -39,20 +36,20 @@ public class UserController {
     public String getAllUserController(Model model) {
         List<User> users = userService.gettAllUserService();
         model.addAttribute("users", users);
-        return "list-user";
+        return "admins/users/list-user";
     }
 
     @GetMapping("{id}")
     public String getUserByIdController(@PathVariable("id") Long id, Model model) {
         User user = userService.getUserByIdService(id);
         model.addAttribute("user", user);
-        return "user-detail";
+        return "admins/users/user-detail";
     }
 
     @GetMapping("edit/{id}")
     public String getFormEditUserController(@PathVariable("id") Long id, Model model) {
         model.addAttribute("user", userService.getUserByIdService(id));
-        return "edit-user";
+        return "admins/users/edit-user";
     }
 
     @PostMapping("edit")
@@ -64,7 +61,7 @@ public class UserController {
     @GetMapping("delete/{id}")
     public String getFormDeleteUserController(@PathVariable("id") Long id, Model model) {
         model.addAttribute("id", id);
-        return "delete-user";
+        return "admins/users/delete-user";
     }
 
     @PostMapping("delete/{id}")
