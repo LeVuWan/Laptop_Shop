@@ -1,6 +1,7 @@
 package com.windy.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -21,5 +22,13 @@ public class UserService {
 
     public List<User> gettAllUserService() {
         return userRepository.findAll();
+    }
+
+    public User getUserByIdService(Long id) {
+        return userRepository.getById(id);
+    }
+
+    public void deleteUserService(Long id) {
+        userRepository.deleteById(id);
     }
 }

@@ -42,12 +42,11 @@
                         <td th:text="${u.fullName}"></td>
                         <td th:text="${u.email}"></td>
                         <td>
-                            <a th:href="@{/users/{id}(id=${u.id})}" class="btn btn-sm btn-outline-primary me-1">view</a>
-                            <form th:action="@{/users/{id}(id=${u.id})}" method="post" style="display:inline-block">
-                                <input type="hidden" name="_method" value="delete" />
-                                <button type="submit" class="btn btn-sm btn-outline-danger me-1">delete</button>
-                            </form>
-                            <a th:href="@{/users/{id}/edit(id=${u.id})}"
+                            <a th:href="@{/admin/user/{id}(id=${u.id})}"
+                                class="btn btn-sm btn-outline-primary me-1">view</a>
+                            <a class="btn btn-sm btn-outline-danger me-1"
+                                th:href="@{/admin/user/delete/{id}(id=${u.id})}">delete</a>
+                            <a th:href="@{/admin/user/delete/{id}(id=${u.id})}"
                                 class="btn btn-sm btn-outline-success">update</a>
                         </td>
                     </tr>
