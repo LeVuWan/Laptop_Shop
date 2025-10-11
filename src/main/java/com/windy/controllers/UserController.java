@@ -9,27 +9,34 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.windy.domains.Role;
 import com.windy.domains.User;
+import com.windy.services.RoleService;
 import com.windy.services.UserService;
 
 @Controller
 @RequestMapping("/admin/user")
 public class UserController {
     private final UserService userService;
+    private final RoleService roleService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, RoleService roleService) {
         this.userService = userService;
-    }
-
-    @GetMapping("create")
-    public String getCreateUserForm() {
-        return "/admins/users/add-new-user";
+        this.roleService = roleService;
     }
 
     @PostMapping("/create")
     public String createUserController(@ModelAttribute User user) {
+        System.out.println("Check user: " + user.toString());
         userService.saveUserServie(user);
         return "redirect:/admin/user";
+    }
+
+    @GetMapping("/create")
+    public String getFormCreateController(Model model) {
+        List<Role> roles = roleService.getAllRolesService();
+        model.addAttribute("roles", roles);
+        return "admins/users/add-new-user";
     }
 
     @GetMapping("")
@@ -48,7 +55,8 @@ public class UserController {
 
     @GetMapping("edit/{id}")
     public String getFormEditUserController(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("user", userService.getUserByIdService(id));
+        User user = userService.getUserByIdService(id);
+        model.addAttribute("user", user);
         return "admins/users/edit-user";
     }
 
