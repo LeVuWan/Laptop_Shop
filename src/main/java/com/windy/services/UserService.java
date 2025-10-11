@@ -3,6 +3,7 @@ package com.windy.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.windy.domains.User;

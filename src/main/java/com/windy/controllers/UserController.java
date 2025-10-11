@@ -1,6 +1,7 @@
 package com.windy.controllers;
 
 import java.util.List;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,10 +9,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.windy.domains.Role;
 import com.windy.domains.User;
 import com.windy.services.RoleService;
+import com.windy.services.UploadService;
 import com.windy.services.UserService;
 
 @Controller
@@ -19,15 +23,32 @@ import com.windy.services.UserService;
 public class UserController {
     private final UserService userService;
     private final RoleService roleService;
+    private final UploadService uploadService;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserController(UserService userService, RoleService roleService) {
+    public UserController(UserService userService, RoleService roleService, UploadService uploadService,
+            PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.roleService = roleService;
+        this.uploadService = uploadService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping("/create")
-    public String createUserController(@ModelAttribute User user) {
-        System.out.println("Check user: " + user.toString());
+    public String createUserController(
+            @ModelAttribute User user,
+            @RequestParam(value = "file", required = false) MultipartFile file) {
+
+        String avatarUrl = uploadService.uploadImage(file, "avatars");
+
+        if (avatarUrl != null) {
+            user.setAvatar(avatarUrl);
+        } else {
+            user.setAvatar("/assets/images/avatars/default.jpg");
+        }
+
+        String hashPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(hashPassword);
         userService.saveUserServie(user);
         return "redirect:/admin/user";
     }
