@@ -29,7 +29,8 @@ public class UploadService {
             byte[] bytes = file.getBytes();
 
             // Xác định thư mục gốc trong project
-            String rootPath = new File("src/main/resources/static/assets/images/" + target).getAbsolutePath();
+            String rootPath = new File("src/main/resources/static/assets/admin-assets/images/" + target)
+                    .getAbsolutePath();
 
             // Tạo thư mục nếu chưa tồn tại
             File dir = new File(rootPath);

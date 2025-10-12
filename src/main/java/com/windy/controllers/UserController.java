@@ -44,7 +44,6 @@ public class UserController {
             BindingResult bindingResult,
             @RequestParam(value = "file", required = false) MultipartFile file,
             Model model) {
-
         if (bindingResult.hasErrors()) {
             List<Role> roles = roleService.getAllRolesService();
             model.addAttribute("roles", roles);

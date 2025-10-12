@@ -27,7 +27,7 @@ public class User {
     private String fullName;
 
     @NotBlank(message = "Password không được để trống")
-    @Size(min = 3, max = 50, message = "Mật khẩu phải từ 3 đến 50 ký tự")
+    @Size(min = 3, max = 100, message = "Mật khẩu phải từ 3 đến 50 ký tự")
     private String password;
 
     private String address;

@@ -6,6 +6,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "products")
@@ -14,18 +19,25 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Tên sản phẩm không được để trống")
     private String name;
 
+    @NotNull(message = "Giá không được để trống")
+    @Positive(message = "Giá phải lớn hơn 0")
     private Double price;
 
     private String image;
 
+    @Size(max = 1000, message = "Mô tả chi tiết không được vượt quá 1000 ký tự")
     @Column(columnDefinition = "TEXT")
     private String detailDesc;
 
+    @Size(max = 255, message = "Mô tả ngắn không được vượt quá 255 ký tự")
     @Column(columnDefinition = "TEXT")
     private String shortDesc;
 
+    @NotNull(message = "Số lượng không được để trống")
+    @PositiveOrZero(message = "Số lượng không được âm")
     private Long quantity;
 
     private Long sold;

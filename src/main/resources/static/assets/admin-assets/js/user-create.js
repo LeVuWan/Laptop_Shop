@@ -1,9 +1,9 @@
 $(document).ready(() => {
 
-    const avatarFile = $("#avatarFile");
+    const avatarFile = $("#imageFile");
     avatarFile.change(function (e) {
 
         const imgURL = URL.createObjectURL(e.target.files[0]);
-        $("#avartarPriview").attr("src", imgURL).show();
+        $("#imagePriview").attr("src", imgURL).show();
     });
 });

@@ -13,91 +13,76 @@
     <div layout:fragment="main">
         <div class="container mt-5">
             <h3 class="mb-3 text-center">Create a Product</h3>
-            <form class="mx-auto w-50" method="post" th:action="@{/admin/product/create}" enctype="multipart/form-data">
+            <form method="post" th:action="@{/admin/product/create}" th:object="${product}"
+                enctype="multipart/form-data">
 
                 <!-- Tên sản phẩm -->
                 <div class="mb-3">
                     <label class="form-label">Product Name:</label>
-                    <input type="text" class="form-control w-75" name="name" placeholder="Enter product name" required>
+                    <input type="text" class="form-control w-75" th:field="*{name}" placeholder="Enter product name"
+                        required>
+                    <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
                 </div>
 
                 <!-- Giá -->
                 <div class="mb-3">
                     <label class="form-label">Price ($):</label>
-                    <input type="number" step="0.01" class="form-control w-75" name="price" placeholder="Enter price"
-                        required>
+                    <input type="number" step="0.01" class="form-control w-75" th:field="*{price}"
+                        placeholder="Enter price" required>
+                    <div class="text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
                 </div>
 
                 <!-- Mô tả ngắn -->
                 <div class="mb-3">
                     <label class="form-label">Short Description:</label>
-                    <textarea class="form-control w-75" name="shortDesc" rows="2"
+                    <textarea class="form-control w-75" th:field="*{shortDesc}" rows="2"
                         placeholder="Enter short description"></textarea>
+                    <div class="text-danger" th:if="${#fields.hasErrors('shortDesc')}" th:errors="*{shortDesc}"></div>
                 </div>
 
                 <!-- Mô tả chi tiết -->
                 <div class="mb-3">
                     <label class="form-label">Detailed Description:</label>
-                    <textarea class="form-control w-75" name="detailDesc" rows="4"
+                    <textarea class="form-control w-75" th:field="*{detailDesc}" rows="4"
                         placeholder="Enter detailed description"></textarea>
+                    <div class="text-danger" th:if="${#fields.hasErrors('detailDesc')}" th:errors="*{detailDesc}"></div>
                 </div>
 
                 <!-- Số lượng -->
                 <div class="mb-3">
                     <label class="form-label">Quantity:</label>
-                    <input type="number" class="form-control w-75" name="quantity" placeholder="Enter quantity"
+                    <input type="number" class="form-control w-75" th:field="*{quantity}" placeholder="Enter quantity"
                         required>
-                </div>
-
-                <!-- Số lượng đã bán -->
-                <div class="mb-3">
-                    <label class="form-label">Sold:</label>
-                    <input type="number" class="form-control w-75" name="sold" placeholder="Enter sold quantity"
-                        value="0">
+                    <div class="text-danger" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></div>
                 </div>
 
                 <!-- Factory -->
                 <div class="mb-3">
                     <label class="form-label">Factory:</label>
-                    <select class="form-control w-75" name="factory" required>
+                    <select class="form-control w-75" th:field="*{factory}" required>
                         <option value="">-- Select factory --</option>
-                        <option>Apple</option>
-                        <option>Samsung</option>
-                        <option>Xiaomi</option>
-                        <option>Oppo</option>
-                        <option>Vivo</option>
-                        <option>Asus</option>
+                        <option th:each="f : ${factories}" th:value="${f}" th:text="${f}"></option>
                     </select>
                 </div>
 
                 <!-- Target -->
                 <div class="mb-3">
                     <label class="form-label">Target Audience:</label>
-                    <select class="form-control w-75" name="target" required>
+                    <select class="form-control w-75" th:field="*{target}" required>
                         <option value="">-- Select target --</option>
-                        <option>Student</option>
-                        <option>Office worker</option>
-                        <option>Gamer</option>
-                        <option>Photographer</option>
-                        <option>Business user</option>
+                        <option th:each="t : ${targets}" th:value="${t}" th:text="${t}"></option>
                     </select>
                 </div>
 
-                <!-- Ảnh sản phẩm -->
                 <div class="mb-3">
                     <label class="form-label">Product Image:</label>
-                    <input id="productImageFile" type="file" class="form-control w-75" name="file" accept="image/*"
-                        required>
-                </div>
-
-                <!-- Xem trước ảnh -->
-                <div class="mb-3">
-                    <img id="productImagePreview" style="max-width: 250px; display: none;" alt="Product preview">
+                    <input id="imageFile" type="file" class="form-control w-75" name="file" accept="image/*">
                 </div>
 
                 <button type="submit" class="btn btn-primary">Create Product</button>
                 <a class="btn btn-success ml-2" th:href="@{/admin/product}">Back</a>
             </form>
+
         </div>
     </div>
 </body>
