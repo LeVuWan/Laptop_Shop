@@ -7,5 +7,5 @@ import com.windy.domains.Role;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
-
+    public Role findByName(String name);
 }
