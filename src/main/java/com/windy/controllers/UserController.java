@@ -4,6 +4,8 @@ import java.util.List;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +19,8 @@ import com.windy.domains.User;
 import com.windy.services.RoleService;
 import com.windy.services.UploadService;
 import com.windy.services.UserService;
+
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/admin/user")
@@ -36,8 +40,16 @@ public class UserController {
 
     @PostMapping("/create")
     public String createUserController(
-            @ModelAttribute User user,
-            @RequestParam(value = "file", required = false) MultipartFile file) {
+            @Valid @ModelAttribute User user,
+            BindingResult bindingResult,
+            @RequestParam(value = "file", required = false) MultipartFile file,
+            Model model) {
+
+        if (bindingResult.hasErrors()) {
+            List<Role> roles = roleService.getAllRolesService();
+            model.addAttribute("roles", roles);
+            return "admins/users/add-new-user";
+        }
 
         String avatarUrl = uploadService.uploadImage(file, "avatars");
 
@@ -57,6 +69,7 @@ public class UserController {
     public String getFormCreateController(Model model) {
         List<Role> roles = roleService.getAllRolesService();
         model.addAttribute("roles", roles);
+        model.addAttribute("user", new User());
         return "admins/users/add-new-user";
     }
 
