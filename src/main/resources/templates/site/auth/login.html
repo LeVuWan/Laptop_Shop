@@ -36,6 +36,10 @@
                                         <div th:if="${param.error}" class="alert alert-danger">
                                             Email hoặc mật khẩu không đúng!
                                         </div>
+
+                                        <div th:if="${param.logout}" class="alert alert-success">
+                                            Đăng xuất thành công
+                                        </div>
                                         <button type="submit" class="btn btn-primary">Login</button>
                                     </form>
                                 </div>
